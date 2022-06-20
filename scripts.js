@@ -16,7 +16,7 @@ const fetch = require("node-fetch");
         return apps;
     }
 
-    // scoped variable of the returned json object
+    // Scoped variable of the returned json object
     let mergedArr = [];
 
 
@@ -45,8 +45,8 @@ const fetch = require("node-fetch");
         for (let element of mergedArr) {
             for (let app of apps) {
                 if (element.name === app.name) {
-                    element.application.push(...app.application.toString())
-                    element.emails = [...app.emails]
+                    element.application.push(...app.application.toString());
+                    element.emails = [...app.emails];
                 }
             }
         }
