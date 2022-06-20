@@ -1,0 +1,22 @@
+{
+  "name": "fevo-takehome",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scripts.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jackiepareja/fevo-takehome.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jackiepareja/fevo-takehome/issues"
+  },
+  "homepage": "https://github.com/jackiepareja/fevo-takehome#readme",
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  }
+}

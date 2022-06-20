@@ -1,3 +1,6 @@
+// Use fetch with node
+const fetch = require("node-fetch");
+
 (function main() {
     /** 
     * @param {string} url - fetch json url
@@ -17,7 +20,7 @@
     let mergedArr = [];
 
 
-    fetchData('/accounts.json').then((apps) => {
+    fetchData('http://127.0.0.1:8080/accounts.json').then((apps) => {
         // Track how many person objects need to be created
         let storage = {};
         for (let app of apps) {
@@ -48,5 +51,5 @@
             }
         }
         // Print the merged accounts
-    }).then(() => console.log('Printed Merged Accounts:', mergedArr))
+    }).then(() => console.log("Printed Merged Accounts", mergedArr))
 }())
