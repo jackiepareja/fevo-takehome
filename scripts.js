@@ -1,68 +1,52 @@
 (function main() {
-    const apps = [
-        {
-            "application": "x", // 1
-            "emails": ["a@gmail.com", "b@gmail.com"],
-            "name": "A"
-        },
-        {
-            "application": "y",
-            "emails": ["c@gmail.com", "d@gmail.com"],
-            "name": "C"
-        },
-        {
-            "application": "x",
-            "emails": ["a@yahoo.com"],
-            "name": "A"
-        },
-        {
-            "application": "z",
-            "emails": ["a@gmail.com", "a@yahoo.com"],
-            "name": "A"
-        }
-    ]
+    /** 
+    * @param {string} url - fetch json url
+    */
+    const fetchData = async (url) => {
+        const response = await fetch(url);
 
-    let storage = {};
-    // fetch the the accounts.json file
-    // loop through the array
-    for (let app of apps) {
-        if (!(app.name in storage)) {
-            storage[app.name] = true;
+        if (!response.ok) {
+            const message = `Error has occured: ${response.status}`;
+            throw new Error(message)
         }
+        const apps = await response.json();
+        return apps;
     }
 
+    // scoped variable of the returned json object
     let mergedArr = [];
 
-    function Obj(application, emails, name) {
-        this.application = application;
-        this.emails = emails;
-        this.name = name;
-    }
 
-    for (let [key] of Object.entries(storage)) {
-        const obj1 = new Obj([], [], key);
-
-        mergedArr.push(obj1)
-    }
-
-    // for (let app of apps) {
-    //     console.log('app', app.application)
-    // }
-
-    // loop over the mergedArr
-    for (let element of mergedArr) {
-        //console.log('element', element)
+    fetchData('/accounts.json').then((apps) => {
+        // Track how many person objects need to be created
+        let storage = {};
         for (let app of apps) {
-            if (element.name === app.name) {
-                element.application = [...app.application, app.application];
-                element.emails = [...app.emails]
+            if (!(app.name in storage)) {
+                storage[app.name] = true;
             }
         }
-        // if element.name matches app.name then store app.name values
+        // Create person properties once with constructor
+        function Obj(application, emails, name) {
+            this.application = application;
+            this.emails = emails;
+            this.name = name;
+        }
 
-    }
-
-    console.log(mergedArr)
-
-
+        // Set how many person objects are created
+        for (let [key] of Object.entries(storage)) {
+            const obj1 = new Obj([], [], key);
+            mergedArr.push(obj1);
+        }
+        
+        // Store and merge properties that each person object has
+        for (let element of mergedArr) {
+            for (let app of apps) {
+                if (element.name === app.name) {
+                    element.application.push(...app.application.toString())
+                    element.emails = [...app.emails]
+                }
+            }
+        }
+        // Print the merged accounts
+    }).then(() => console.log('Printed Merged Accounts:', mergedArr))
 }())
